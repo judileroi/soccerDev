@@ -74,6 +74,24 @@ class Photo {
     };
   }
 
+  // static uploadAndadd=photo=>{
+  //   return (dispatch) => {
+  //     return axios.post(apiUploadUrl, photo)
+  //       .then(response => {
+  //         if (response.status == 200)
+  //           notify.show('Photo uploadé avec succès !', "success", 5000);
+  //           //photo.path=response.path
+            
+  //           dispatch(Photo.add(photo))
+  //       })
+  //       .catch(error => {
+  //         notify.show('Erreur pendant l\'enregistretrement !', "error", 5000);
+  
+  //         throw (error);
+  //       });
+  //   };
+  // }
+
   /** Remove Photo */
   static remove = photoId => {
     return (dispatch) => {

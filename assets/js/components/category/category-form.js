@@ -15,6 +15,8 @@ import blue from '@material-ui/core/colors/blue';
 import { addCategory, updateCategory } from '../../actions/category';
 import { connect } from 'react-redux';
 import Photo from '../../actions/photos';
+import PhotoService from '../../services/photo';
+import CategoryService from '../../services/categories';
 
 const styles = {
   avatar: {
@@ -29,11 +31,9 @@ class CategoryDialog extends Component {
     super(props);
     this.state = {
       category: {
-        name: ''
+        name: '',
+        photos: []
       },
-      photos:[],
-      photos_uri:[],
-      files: [],
       disabled_valid: true,
       openDialog: false,
       edition: false
@@ -42,7 +42,9 @@ class CategoryDialog extends Component {
 
     this.djsConfig = {
       addRemoveLinks: true,
-      processingmultiple: true,
+      processingmultiple: false,
+      maxFiles: 3,
+      uploadMultiple: false,
       acceptedFiles: "image/jpeg,image/png,image/gif"
     };
 
@@ -55,35 +57,44 @@ class CategoryDialog extends Component {
     this.dropzone = null;
   }
 
-  addUpload=()=>{
+  addUpload = () => {
 
   }
-  successUpload = file =>{
-    var files = this.state.files
-    var photos = this.state.photos
+
+  successUpload = file => {
+    var photos = this.state.category.photos
     const dateTime = new Date().getTime();
     const timestamp = Math.floor(dateTime / 1000);
-        photos.push({
-          path:file.name,
-          created:timestamp,
-          base64:file.dataURL
-        })
+    console.log(file);
     
-    files.push(file)
+    photos.push({
+      path: file.dataURL,
+      created: timestamp,
+      name:file.name
+    })
 
+    /** Mis à jour des photos */
+    var categorieNew = Object.assign(this.state.category,{},{photos:photos});
+
+    
     this.setState({
-      files:files,
-      photos:photos
+      category: categorieNew
     })
 
   }
-  removedUpload = file =>{
-    var files = this.state.files
-    var filesNew = files.filter(f=>f.upload.uuid != file.upload.uuid )
-    this.setState({
-      files:filesNew
-    })
+
+  //WARNING! To be deprecated in React v17. Use componentDidUpdate instead.
+  componentWillUpdate(nextProps, nextState) {
+    console.log(nextState);
     
+  }
+  removedUpload = file => {
+    var photos = this.category.state.photos
+    var photosNew = photos.filter(f => f.name != file.name)
+    this.setState({
+      category: Object.assign(this.state.category,{},{photos:photosNew})
+    })
+
   }
   /** Close Dialog */
   handleClose = () => {
@@ -92,19 +103,15 @@ class CategoryDialog extends Component {
   };
 
   //WARNING! To be deprecated in React v17. Use new lifecycle static getDerivedStateFromProps instead.
-   componentWillReceiveProps(nextProps) {    
-     if(nextProps.photos) console.log(nextProps.photos);
-     
+  componentWillReceiveProps(nextProps) {
+
     this.setState({
       category: nextProps.category,
       edition: nextProps.edition
     })
   }
-  
-  componentWillUpdate(){
 
 
-  }
   /** Control Input before validation */
   handleChange = event => {
     var category = Object.assign(this.state.category, {}, { name: event.target.value })
@@ -121,28 +128,81 @@ class CategoryDialog extends Component {
   onCreate = () => {
     const dateTime = new Date().getTime();
     const timestamp = Math.floor(dateTime / 1000);
-    var category = Object.assign(this.state.category, {}, { created: timestamp })
-        
-    this.setState({
-      category: category
-    })
+    var photo_all = this.state.category.photos
+    var category_all = this.state.category
 
-    this.state.photos.map(photo=>{      
-      this.props.addPhoto(photo)
-    })
+    var category_without_photos = Object.assign(category_all, {}, { created: timestamp, photos:[] })
+    console.log(photo_all);
+
+
+    /** Save Category */
+      if (!this.state.edition){
+        CategoryService.saveCategory(category_without_photos).then(res => {
+          var categoryuuid = '/api/categories/' + res.data.id
+                    /** Add New Photos */
+
+          photo_all.map(p=>{
+            PhotoService.uploadPhoto(Object.assign(p, {}, { category: categoryuuid })).then(res=>{
+              if(res.status=201){
+                var phot =Object.assign(p, {}, { category: categoryuuid, path:res.data.path });
+                PhotoService.savePhoto(phot).then(res=>{
+                  console.log('Sauvegardé');
+                  
+                })
+              }
+              
+            }).catch(error=>{
+              console.log('Error');
+              
+            })
+          })
     
     
+        }).catch(error => {
+          throw (error)
+        })
+      }
+      else{
+        CategoryService.updateCategory(category_without_photos).then(res => {
+          var categoryuuid = '/api/categories/' + res.data.id
+          
+          /** Add New Photos */
+          photo_all.map(p=>{
+            PhotoService.uploadPhoto(Object.assign(p, {}, { category: categoryuuid })).then(res=>{
+              if(res.status=201){
+                var phot =Object.assign(p, {}, { category: categoryuuid, path:res.data.path });
+                PhotoService.savePhoto(phot).then(res=>{
+                  console.log('Sauvegardé');
+                  
+                })
+              }
+              
+            }).catch(error=>{
+              console.log('Error');
+              
+            })
+          })
+    
+    
+        }).catch(error => {
+          throw (error)
+        })
+      }
+
+
+
     // if (!this.state.edition)
     //   this.props.create(this.state.category)
     // else
     //   this.props.update(this.state.category)
     //     ;
 
-   // this.handleClose()
+  //  this.handleClose()
 
 
   }
 
+  
 
 
   render() {
@@ -207,7 +267,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     update: (category) => {
       dispatch(updateCategory(category))
     },
-    addPhoto:(photo) =>{
+    addPhoto: (photo) => {
       dispatch(Photo.uploadAndadd(photo))
     }
   }
@@ -216,8 +276,8 @@ const mapStateToProps = (state) => {
 
   return {
     category_active: state.category.active,
-    last_uri_photo:state.photo.last_uri
+    last_uri_photo: state.photo.last_uri
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)( withStyles(styles)(CategoryDialog))
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CategoryDialog))

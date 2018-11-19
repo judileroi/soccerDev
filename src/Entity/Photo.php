@@ -86,4 +86,11 @@ class Photo
     {
         return $this->category;
     }
+    /**
+     * @ORM\PostPersist 
+     */
+    public function onPostPersist()
+     {
+         return $this->getId();
+     }
 }

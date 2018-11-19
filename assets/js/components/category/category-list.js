@@ -57,7 +57,8 @@ class CategoryListItem extends Component {
   initialize = () => {
     return {
       name: '',
-      created: 0
+      created: 0,
+      photos:[]
     }
   }
 
