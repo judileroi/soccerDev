@@ -10,9 +10,23 @@ class CategoryService {
     return axios.post(apiUrl, category)
   }
 
-  static updateCategory = category => {
-    return axios.post(apiUrl+'/'+category.id, category)
+  static getCategory = (category) => {
+    return axios.get(apiUrl+'/'+category.id)
   }
+
+  static getAllCategory = () => {
+    return axios.get(apiUrl)
+  }
+
+  static getCategoryAllPhotos = (category) => {
+    return axios.get(apiUrl+'/'+category.id+'/photos')
+  }
+
+  static updateCategory = category => {
+    return axios.put(apiUrl+'/'+category.id, category)
+  }
+
+
 }
 
 export default CategoryService

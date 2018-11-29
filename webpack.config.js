@@ -13,6 +13,10 @@ Encore
   .enableVersioning(Encore.isProduction())
   .addEntry('app', './assets/js/app.js')
   .addEntry('home', './assets/js/home.js')
+  .addEntry('admin', './assets/js/admin.js')
+  .enableSassLoader() 
   .enableReactPreset();
 
-module.exports = Encore.getWebpackConfig();
+  module.exports = Encore.getWebpackConfig();
+
+

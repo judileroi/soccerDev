@@ -8,4 +8,5 @@ export default combineReducers({
     category: categoryReducer,
     default:defaultReducer,
     photo:photoReducer
+
   });

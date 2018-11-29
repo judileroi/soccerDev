@@ -5,11 +5,14 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * 
- * @ApiResource(attributes={"order"={"name": "ASC"}})  
+ * @ApiResource(
+ * attributes={"order"={"name": "ASC"}}
+ * )  
  *  */
 class Category
 {
@@ -37,6 +40,7 @@ class Category
 
     /**
      * @ORM\OneToMany(targetEntity="Photo", mappedBy="category" ,cascade={"all"})
+     * @ApiSubresource
      */
     private $photos;
    

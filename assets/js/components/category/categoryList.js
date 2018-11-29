@@ -1,19 +1,18 @@
 import React, { Component } from 'react'
-import CategoryItem from './category-item';
-import CategoryDialogWrapped from './category-form';
+import CategoryItem from './categoryItem';
+import CategoryDialogWrapped from './categoryForm';
 import TableBody from '@material-ui/core/TableBody';
-import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
 import Notifications, { notify } from 'react-notify-toast';
 import { fetchAllCategory } from '../../actions/category';
 import { connect } from 'react-redux';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
+import CategoryService from '../../services/categories';
 
 const classes = theme => ({
   root: {
@@ -70,6 +69,11 @@ class CategoryListItem extends Component {
 
   isActive = data => {
     if (data) {
+
+      CategoryService.getCategoryAllPhotos(data).then(res=>{
+        this.setState({ openDialog: true, photos_active: res.data });
+      })
+
       this.setState({ openDialog: true, category_active: data, edition: true });
 
     }
@@ -124,8 +128,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 const mapStateToProps = (state) => {
   return {
-    category_active: state.category.active,
-    last_uri_photo:state.photo.last_uri
+    category_active: state.category.activ
 
   }
 }

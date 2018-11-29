@@ -9,6 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Response;
 use \DateTime;
+use App\Entity\Photo;
+use App\Entity\Category;
 
 class DefaultController extends Controller
 {
@@ -35,8 +37,9 @@ class DefaultController extends Controller
     public function uploadHandlerAction(Request $request)
     {
 
-        $path =json_decode($request->getContent())->path;
+        $path =json_decode($request->getContent())->dataURL;
         $created =json_decode($request->getContent())->created;
+        $categoryuuid =json_decode($request->getContent())->category;
         $folderPath = $this->get('kernel')->getProjectDir() . '/public/uploads/';
         $splited = explode(',', substr( $path , 5 ) , 2);
 
@@ -53,6 +56,14 @@ class DefaultController extends Controller
         return new JsonResponse(['path'=>$nameFile,'created'=> $created],Response::HTTP_INTERNAL_SERVER_ERROR);
         else{
             /** Persist Photo */
+            $em = $this->getDoctrine()->getManager();
+            $categoryEntity = $em->getRepository(Category::class)->find($categoryuuid);
+            $photo = new Photo();
+            $photo->setCategory($categoryEntity);
+            $photo->setPath($nameFile);
+            $photo->setCreated($created);
+            $em->persist($photo);
+            $em->flush();
             return new JsonResponse(['path'=>$nameFile,'created'=> $created],Response::HTTP_OK);
 
         }

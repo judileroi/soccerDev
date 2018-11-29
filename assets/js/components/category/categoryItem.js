@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { removeCategory, activeCategory } from '../../actions/category';
 
 import timestampToDate from '../../lib/timestamp'
+import CategoryService from '../../services/categories';
 
 class CategoryItem extends Component {
     constructor(props) {
@@ -20,9 +21,12 @@ class CategoryItem extends Component {
 
     }
 
-    onSelect = data => {
+    onSelect = category => {
+        CategoryService.getCategory(category).then(res=>{
+            if(res.data.id)        
+            this.props.select(res.data)
 
-        this.props.select(data)
+        })
     }
 
     render() {
