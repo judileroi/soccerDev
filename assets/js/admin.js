@@ -5,34 +5,32 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import reducers from './reducer';
 import thunk from 'redux-thunk';
+import store, { history } from './store'
+import { ConnectedRouter } from 'connected-react-router'
 
-
-/** Router Module Redux  */
-import { connectRouter,ConnectedRouter, routerMiddleware } from 'connected-react-router'
-import { Route, Link } from 'react-router-dom'
-import store, {history} from './store'
-
-import createHistory from 'history/createBrowserHistory'
-// import Navigation from './components/shared/navigation';
-
-import CategoryResource from './components/category/categoryResource';
-import BannerAdmin from './components/shared/banner-admin'
+import BannerAdmin from './components/admin/banner'
+import SideBarAdmin from './components/admin/sidebar'
 import Navigation from './components/shared/navigation'
+import RouterAdmin from './routing/admin'
 
 
-const AdminPlus = () => {
+const AdminPlus = (props) => {
   return (
     <Provider store={store}>
       <div>
-        <Navigation context={this.context} />
+        <header>
+          <Navigation context={this.context} userActive={true} />
+        </header>
         <ConnectedRouter history={history}>
         <div>
-            <Route exact path="/admin" component={BannerAdmin} />
-            <Route exact path="/admin/category" component={CategoryResource} />
+          <BannerAdmin />
+          <div className="container">
+          <RouterAdmin />
+          </div>
         </div>
         </ConnectedRouter>
       </div>
-    </Provider>);
+    </Provider >);
 }
 
 

@@ -21,7 +21,7 @@ const classes = theme => ({
     overflowX: 'auto',
   },
   table: {
-    minWidth: 700,
+    minWidth: 300,
   },
 });
 
@@ -80,7 +80,7 @@ class CategoryListItem extends Component {
   }
 
   render() {
-    return (<Paper className="container">
+    return (<Paper >
       <Notifications />
 
       <IconButton onClick={this.handleClickOpen}>    

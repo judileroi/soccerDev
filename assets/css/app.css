@@ -21,3 +21,4 @@ html {
 .main-search-container{
     height: 300px !important;
 }
+.hidden { display:none; }
