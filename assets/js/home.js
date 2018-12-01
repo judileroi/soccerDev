@@ -10,10 +10,7 @@ import Navigation from './components/shared/navigation';
 import MainSearch from './components/shared/main-search';
 import CategoryService from './services/categories';
 import CategorySlider from './components/home/category-slider';
-
-
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));
+import store ,{history} from './store';
 
 class Home extends React.Component {
   constructor() {
