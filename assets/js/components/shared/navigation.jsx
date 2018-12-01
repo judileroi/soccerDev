@@ -24,8 +24,8 @@ const Navigation = (props) => {
                                 <li><a href="index-2.html">Home 2</a></li>
                                 <li><a href="index-3.html">Home 3</a></li>
                                 <li><a href="index-4.html">Home 4</a></li>
-                                <li><a href="/category" onClick={props.navigateTo.bind(this, '/category')}>Category Resource</a></li>
-                                <li><a href="/" onClick={props.navigateTo.bind(this, '/')}>Banner</a></li>
+                                <li><a  onClick={props.navigateTo.bind(this, '/admin/category')}>Category Resource</a></li>
+                                <li><a  onClick={props.navigateTo.bind(this, '/admin')}>Banner</a></li>
                             </ul>
                         </li>
 

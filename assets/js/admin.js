@@ -17,17 +17,20 @@ import createHistory from 'history/createBrowserHistory'
 
 import CategoryResource from './components/category/categoryResource';
 import BannerAdmin from './components/shared/banner-admin'
+import Navigation from './components/shared/navigation'
 
 
 const AdminPlus = () => {
   return (
     <Provider store={store}>
       <div>
-        {/* <Navigation context={this.context} /> */}
-        {/* <ConnectedRouter history={history}>
-            <Route exact path="/" component={BannerAdmin} />
-            <Route exact path="/category" component={CategoryResource} />
-        </ConnectedRouter> */}
+        <Navigation context={this.context} />
+        <ConnectedRouter history={history}>
+        <div>
+            <Route exact path="/admin" component={BannerAdmin} />
+            <Route exact path="/admin/category" component={CategoryResource} />
+        </div>
+        </ConnectedRouter>
       </div>
     </Provider>);
 }
