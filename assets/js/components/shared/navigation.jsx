@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { push } from "react-router-redux";
 import PropTypes from 'prop-types';
 
+import NavigationUser from '../admin/navigation'
+
 const Navigation = (props) => {
     return (
         <div id="header">
@@ -25,7 +27,6 @@ const Navigation = (props) => {
                                     <li><a href="index-2.html">Home 2</a></li>
                                     <li><a href="index-3.html">Home 3</a></li>
                                     <li><a href="index-4.html">Home 4</a></li>
-                                    <li><a onClick={props.navigateTo.bind(this, '/admin/category')}>Category Resource</a></li>
                                     <li><a onClick={props.navigateTo.bind(this, '/admin')}>Banner</a></li>
                                 </ul>
                             </li>
@@ -94,15 +95,7 @@ const Navigation = (props) => {
                 <div className="right-side">
                     <div className="header-widget">
                         
-                        <div  className={!props.userActive ? 'hidden' : 'user-menu'}>
-                            <div className="user-name"><span><img src="images/dashboard-avatar.jpg" alt=""/></span>Tom Perrin</div>
-                                <ul>
-                                    <li><a href="dashboard.html"><i className="sl sl-icon-settings"></i> Dashboard</a></li>
-                                    <li><a href="dashboard-messages.html"><i className="sl sl-icon-envelope-open"></i> Messages</a></li>
-                                    <li><a href="dashboard-my-profile.html"><i className="sl sl-icon-user"></i> My Profile</a></li>
-                                    <li><a href="index.html"><i className="sl sl-icon-power"></i> Logout</a></li>
-                                </ul>
-                            </div>
+                        <NavigationUser userActive={props.userActive}/>
                         <a href="#sign-in-dialog" className={props.userActive ? 'hidden' : 'sign-in popup-with-zoom-anim'}><i className="sl sl-icon-login"></i> Sign In</a>
                         <a href="dashboard-add-listing.html" className={props.userActive ? 'hidden' : 'button border with-icon'} >Devenir Organisateur <i className="sl sl-icon-plus"></i></a>
                     </div>

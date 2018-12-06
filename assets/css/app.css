@@ -22,3 +22,17 @@ html {
     height: 300px !important;
 }
 .hidden { display:none; }
+
+/** Begin Steper **/
+
+.MuiTypography-body1-75{
+font-size: inherit !important;
+}
+.MuiStepper-root-5{
+    padding: inherit !important
+}
+
+.MuiStepIcon-root-52.MuiStepIcon-active-54{
+    color:#b3c211 !important;
+}
+

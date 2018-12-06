@@ -1,15 +1,14 @@
+import 'react-dates/lib/css/_datepicker.css';
 import '../css/app.css';
+import '../css/calendar.scss';
+
+import 'react-dates/initialize'
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import reducers from './reducer';
-import thunk from 'redux-thunk';
+import { Provider } from 'react-redux'
 import store, { history } from './store'
 import { ConnectedRouter } from 'connected-react-router'
-
 import BannerAdmin from './components/admin/banner'
-import SideBarAdmin from './components/admin/sidebar'
 import Navigation from './components/shared/navigation'
 import RouterAdmin from './routing/admin'
 
