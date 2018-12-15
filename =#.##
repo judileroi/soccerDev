@@ -1,0 +1,9 @@
+
+> fsevents@1.2.4 install /Users/TANDJIEKPON/Documents/PERSO/soccerDev/node_modules/fsevents
+> node install
+
+Failed to execute '/usr/local/Cellar/node/11.1.0/bin/node /usr/local/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js configure --fallback-to-build --module=/Users/TANDJIEKPON/Documents/PERSO/soccerDev/node_modules/fsevents/lib/binding/Release/node-v67-darwin-x64/fse.node --module_name=fse --module_path=/Users/TANDJIEKPON/Documents/PERSO/soccerDev/node_modules/fsevents/lib/binding/Release/node-v67-darwin-x64 --napi_version=3 --node_abi_napi=napi' (7)
+
+> jss@9.8.7 postinstall /Users/TANDJIEKPON/Documents/PERSO/soccerDev/node_modules/jss
+> node -e "console.log('\u001b[35m\u001b[1mLove JSS? You can now support us on open collective:\u001b[22m\u001b[39m\n > \u001b[34mhttps://opencollective.com/jss/donate\u001b[0m')"
+

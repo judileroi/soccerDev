@@ -4,7 +4,6 @@ import { Route } from 'react-router-dom'
 import CategoryResource from '../components/category/categoryResource';
 import SideBarAdmin from '../components/admin/sidebar';
 import ActivityForm from '../components/activity/activityForm';
-import DatePickerRange from '../components/shared/datePickerRange';
 
 
 const RouterAdmin = (props) => {
@@ -14,7 +13,6 @@ const RouterAdmin = (props) => {
                 <Route exact path="/admin" render={() => (<h1>Coool</h1>)} />
                 <Route exact path="/admin/category" component={CategoryResource} />
                 <Route exact path="/admin/activity" component={ActivityForm} />
-                <Route exact path="/admin/date" component={DatePickerRange} />
             </div>
 
             <div className="col-lg-3 col-md-4 margin-top-0 margin-bottom-60">

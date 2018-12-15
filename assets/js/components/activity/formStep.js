@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
-import DatePickerRange from '../shared/datePickerRange';
-
+import FormActivityStep0 from './form/step0';
+import FormActivityStep1 from './form/step1';
+import FormActivityStep2 from './form/step2';
+import FormActivityStep3 from './form/step3';
+import FormActivityStep1Bis from './form/step1bis';
+import FormActivityStep4 from './form/step4';
 
 const styles = theme => ({
     container: {
@@ -16,6 +17,7 @@ const styles = theme => ({
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         fontSize: 16
+
     },
     dense: {
         marginTop: 16,
@@ -26,276 +28,87 @@ const styles = theme => ({
 
 });
 
-const currencies = [
-    {
-        value: 'USD',
-        label: '$',
-    },
-    {
-        value: 'EUR',
-        label: '€',
-    },
-    {
-        value: 'BTC',
-        label: '฿',
-    },
-    {
-        value: 'JPY',
-        label: '¥',
-    },
-];
+
 
 class FormStep extends React.Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            name: 'Cat in the Hat',
-            age: '',
-            multiline: 'Controlled',
-            currency: 'EUR',
+        };
 
+        this.djsConfig = {
+            addRemoveLinks: true,
+            processingmultiple: false,
+            acceptedFiles: "image/jpeg,image/jpg,image/png,image/gif"
+        };
+
+        this.componentConfig = {
+            iconFiletypes: ['.jpg', '.png', '.gif'],
+            showFiletypeIcon: true,
+            postUrl: '/upload'
         };
     }
-    handleChange = name => event => {
-        this.setState({
-            [name]: event.target.value,
-        });
+    handleChange = event => {
+
+        this.props.handleSetState(event)
     };
+
+    changeDate = (range) => {
+        this.props.handleSetStateForDate(range)
+
+    }
+    handleSetDropZoneState = dz => {
+        console.log('FormStep');
+        console.log(dz);
+        console.log('FormStep');
+        if(dz.files.length > 0)
+        this.props.handleSetDropZoneState(dz)
+    }
+
 
     render() {
         const { classes } = this.props;
-        const { index } = this.props;
+        const { index, activity,dropzone } = this.props;
+        switch (index) {
+            case 0:
+                return <FormActivityStep0
+                    handleChange={this.handleChange}
+                    activity={activity}
+                />
+            case 1:
+                return <FormActivityStep1
+                    activity={activity}
+                    changeDate={this.changeDate}
+                />
+            case 2:
+                return <FormActivityStep1Bis
+                    activity={activity}
+                    classes={classes}
+                    handleChange={this.handleChange}
+                />
+            case 3:
+                return <FormActivityStep2
+                    activity={activity}
+                    classes={classes}
+                    handleChange={this.handleChange}
+                />
 
-        return (
-            <form className={classes.container} noValidate autoComplete="off">
-                <div className={index == 0 ? ' ' : '  hidden'}>
-                    <DatePickerRange/>
-                    <TextField
-                        required
-                        id="outlined-title"
-                        label="Titre"
-                        fullWidth
-                        defaultValue=""
-                        className={classes.textField}
-                        margin="normal"
-                        variant="outlined"
-                    />
+            case 4:
+                return <FormActivityStep3
+                    activity={activity}
+                    classes={classes}
+                    handleChange={this.handleChange}
+                />
 
-                    <TextField
-                        required
-                        id="outlined-description"
-                        label="Description"
-                        fullWidth
-                        multiline
-                        defaultValue=""
-                        className={classes.textField}
-                        margin="normal"
-                        variant="outlined"
-                    />
+            case 5:
+                return <FormActivityStep4
+                    handleSetDropZoneState={this.handleSetDropZoneState}
+                    dropzone={dropzone}
 
-                </div>
-                <div className={index == 1 ? '' : 'hidden'}>
-                    <TextField
-                        required
-                        id="outlined-begin"
-                        label="Date de Début"
-                        type="date"
-                        defaultValue={Date.now()}
-                        className={classes.textField}
-                        margin="normal"
-                        variant="outlined"
-                        placeholder="Placeholder"
+                />
+        }
 
-                    />
-                    <TextField
-                        required
-                        id="outlined-end"
-                        label="Date de Fin"
-                        type="date"
-                        defaultValue={Date.now()}
-                        className={classes.textField}
-                        margin="normal"
-                        variant="outlined"
-                        placeholder="Placeholder"
-
-                    />
-                    <TextField
-                        id="outlined-email-input"
-                        label="Email"
-                        className={classes.textField}
-                        type="email"
-                        name="email"
-                        autoComplete="email"
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-password-input"
-                        label="Password"
-                        className={classes.textField}
-                        type="password"
-                        autoComplete="current-password"
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-read-only-input"
-                        label="Read Only"
-                        defaultValue="Hello World"
-                        className={classes.textField}
-                        margin="normal"
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-dense"
-                        label="Dense"
-                        className={classNames(classes.textField, classes.dense)}
-                        margin="dense"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-multiline-flexible"
-                        label="Multiline"
-                        multiline
-                        rowsMax="4"
-                        value={this.state.multiline}
-                        onChange={this.handleChange('multiline')}
-                        className={classes.textField}
-                        margin="normal"
-                        helperText="hello"
-                        variant="outlined"
-                    />
-                </div>
-                <div className={index == 2 ? '' : 'hidden'}>
-                    <TextField
-                        id="outlined-multiline-static"
-                        label="Multiline"
-                        multiline
-                        rows="4"
-                        defaultValue="Default Value"
-                        className={classes.textField}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-helperText"
-                        label="Helper text"
-                        defaultValue="Default Value"
-                        className={classes.textField}
-                        helperText="Some important text"
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-with-placeholder"
-                        label="With placeholder"
-                        placeholder="Placeholder"
-                        className={classes.textField}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-textarea"
-                        label="Multiline Placeholder"
-                        placeholder="Placeholder"
-                        multiline
-                        className={classes.textField}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-number"
-                        label="Number"
-                        value={this.state.age}
-                        onChange={this.handleChange('age')}
-                        type="number"
-                        className={classes.textField}
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-search"
-                        label="Search field"
-                        type="search"
-                        className={classes.textField}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-select-currency"
-                        select
-                        label="Select"
-                        className={classes.textField}
-                        value={this.state.currency}
-                        onChange={this.handleChange('currency')}
-                        SelectProps={{
-                            MenuProps: {
-                                className: classes.menu,
-                            },
-                        }}
-                        helperText="Please select your currency"
-                        margin="normal"
-                        variant="outlined"
-                    >
-                        {currencies.map(option => (
-                            <MenuItem key={option.value} value={option.value}>
-                                {option.label}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                    <TextField
-                        id="outlined-select-currency-native"
-                        select
-                        label="Native select"
-                        className={classes.textField}
-                        value={this.state.currency}
-                        onChange={this.handleChange('currency')}
-                        SelectProps={{
-                            native: true,
-                            MenuProps: {
-                                className: classes.menu,
-                            },
-                        }}
-                        helperText="Please select your currency"
-                        margin="normal"
-                        variant="outlined"
-                    >
-                        {currencies.map(option => (
-                            <option key={option.value} value={option.value}>
-                                {option.label}
-                            </option>
-                        ))}
-                    </TextField>
-                    <TextField
-                        id="outlined-full-width"
-                        label="Label"
-                        style={{ margin: 8 }}
-                        placeholder="Placeholder"
-                        helperText="Full width!"
-                        fullWidth
-                        margin="normal"
-                        variant="outlined"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                    />
-                    <TextField
-                        id="outlined-bare"
-                        className={classes.textField}
-                        defaultValue="Bare"
-                        margin="normal"
-                        variant="outlined"
-                    />
-                </div>
-            </form>
-        );
     }
 }
 

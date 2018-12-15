@@ -1,8 +1,8 @@
-import 'react-dates/lib/css/_datepicker.css';
 import '../css/app.css';
 import '../css/calendar.scss';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css'; // theme css file
 
-import 'react-dates/initialize'
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'

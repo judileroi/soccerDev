@@ -21,7 +21,7 @@ html {
 .main-search-container{
     height: 300px !important;
 }
-.hidden { display:none; }
+.hidden { color: #eaeaea }
 
 /** Begin Steper **/
 
@@ -35,4 +35,5 @@ font-size: inherit !important;
 .MuiStepIcon-root-52.MuiStepIcon-active-54{
     color:#b3c211 !important;
 }
+
 
