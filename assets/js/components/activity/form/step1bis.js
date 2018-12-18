@@ -2,19 +2,19 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
 const FormActivityStep1Bis = (props) => {
-    const {activity,  classes} = props
+    const {classes,handleChange,activity } = props
     return (
         <TextField
-        id="outlined-address-input"
+        id="place"
         label="Addresse"
         autoComplete="false"
+        onChange={handleChange}
         placeholder="Renseigner addresse d'organisation"
-        className={classes.textField}
-        type="number"
-        name="address"
         fullWidth
-        margin="normal"
+        className={classes.textField}
         variant="outlined"
+        defaultValue={activity.place}
+        margin="normal"
     />
 
     );

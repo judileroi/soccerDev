@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
 const FormActivityStep2 = (props) => {
-    const {classes,handleChange,activity, changeDate} = props
+    const {classes,handleChange,activity} = props
     return (
         <div className="row">
         <div className="col-md-12">

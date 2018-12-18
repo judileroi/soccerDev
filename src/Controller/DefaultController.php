@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use \DateTime;
 use App\Entity\Photo;
 use App\Entity\Category;
+use App\Entity\Activity;
 
 class DefaultController extends Controller
 {
@@ -40,6 +41,8 @@ class DefaultController extends Controller
         $path =json_decode($request->getContent())->dataURL;
         $created =json_decode($request->getContent())->created;
         $categoryuuid =json_decode($request->getContent())->category;
+        $activityuuid =json_decode($request->getContent())->activity;
+
         $folderPath = $this->get('kernel')->getProjectDir() . '/public/uploads/';
         $splited = explode(',', substr( $path , 5 ) , 2);
 
@@ -57,9 +60,20 @@ class DefaultController extends Controller
         else{
             /** Persist Photo */
             $em = $this->getDoctrine()->getManager();
-            $categoryEntity = $em->getRepository(Category::class)->find($categoryuuid);
             $photo = new Photo();
-            $photo->setCategory($categoryEntity);
+            if($categoryuuid) {
+                $categoryEntity = $em->getRepository(Category::class)->find($categoryuuid);
+                $photo->setCategory($categoryEntity);
+
+            }
+
+            if($activityuuid) {
+
+                $activityEntity = $em->getRepository(Activity::class)->find($activityuuid);
+                $photo->setActivity($activityEntity);
+
+            }
+            
             $photo->setPath($nameFile);
             $photo->setCreated($created);
             $em->persist($photo);

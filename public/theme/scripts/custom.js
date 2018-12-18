@@ -709,6 +709,24 @@ $.scrollTo = $.fn.scrollTo = function(x, y, options){
     });
 };
 
+    /*----------------------------------------------------*/
+    /*  Chosen Plugin
+    /*----------------------------------------------------*/
+
+    var config = {
+		'.chosen-select'           : {disable_search_threshold: 10, width:"100%"},
+		'.chosen-select-deselect'  : {allow_single_deselect:true, width:"100%"},
+		'.chosen-select-no-single' : {disable_search_threshold:100, width:"100%"},
+		'.chosen-select-no-single.no-search' : {disable_search_threshold:10, width:"100%"},
+		'.chosen-select-no-results': {no_results_text:'Oops, nothing found!'},
+		'.chosen-select-width'     : {width:"95%"}
+	  };
+  
+	  for (var selector in config) {
+			 if (config.hasOwnProperty(selector)) {
+			$(selector).chosen(config[selector]);
+			}
+	  }
 
 /*----------------------------------------------------*/
 /*  Ratings Script

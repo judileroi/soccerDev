@@ -32,8 +32,24 @@ font-size: inherit !important;
     padding: inherit !important
 }
 
+
 .MuiStepIcon-root-52.MuiStepIcon-active-54{
     color:#b3c211 !important;
+}
+
+.MuiStepIcon-root-52.MuiStepIcon-completed-55{
+    color: #b3c211 !important;
+}
+
+.disabled{
+    background: #eaeaea !important;
+    color: #555
+}
+
+.button{
+    font-size: 15px !important;
+    text-transform: capitalize;
+    font-weight: 250 !important
 }
 
 

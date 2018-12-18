@@ -59,9 +59,7 @@ class FormStep extends React.Component {
 
     }
     handleSetDropZoneState = dz => {
-        console.log('FormStep');
-        console.log(dz);
-        console.log('FormStep');
+
         if(dz.files.length > 0)
         this.props.handleSetDropZoneState(dz)
     }

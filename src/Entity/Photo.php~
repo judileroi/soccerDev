@@ -98,28 +98,4 @@ class Photo
      {
          return $this->getId();
      }
-
-    /**
-     * Set activity.
-     *
-     * @param \App\Entity\Activity|null $activity
-     *
-     * @return Photo
-     */
-    public function setActivity(\App\Entity\Activity $activity = null)
-    {
-        $this->activity = $activity;
-
-        return $this;
-    }
-
-    /**
-     * Get activity.
-     *
-     * @return \App\Entity\Activity|null
-     */
-    public function getActivity()
-    {
-        return $this->activity;
-    }
 }

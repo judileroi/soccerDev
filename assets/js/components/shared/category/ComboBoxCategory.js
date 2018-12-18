@@ -26,8 +26,8 @@ class ComboBoxCategory extends Component {
     render() {
         const {selected} = this.props
             return (
-                <div className="main-search-input-item">
-                    <select data-placeholder="All Categories" id="category-select" value={selected} onChange={this.handleChangeSelect} className="chosen-select"  className="chosen-select" >
+                <div>
+                    <select id="category-select" value={selected} onChange={this.handleChangeSelect} className="chosen-select"  >
                         <option key="0" value="0" >--Choisir une catégorie--</option>
 
                         {

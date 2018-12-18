@@ -83,14 +83,9 @@ class Activity
     private $date;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $startDate;
-
-    /**
-     * @ORM\Column(type="string", nullable=true))
-     */
-    private $time;
 
     /**
      * @ORM\Column(type="datetime")
@@ -505,48 +500,5 @@ class Activity
     public function getCategory()
     {
         return $this->category;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add photo.
-     *
-     * @param \App\Entity\Photo $photo
-     *
-     * @return Activity
-     */
-    public function addPhoto(\App\Entity\Photo $photo)
-    {
-        $this->photos[] = $photo;
-
-        return $this;
-    }
-
-    /**
-     * Remove photo.
-     *
-     * @param \App\Entity\Photo $photo
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removePhoto(\App\Entity\Photo $photo)
-    {
-        return $this->photos->removeElement($photo);
-    }
-
-    /**
-     * Get photos.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPhotos()
-    {
-        return $this->photos;
     }
 }

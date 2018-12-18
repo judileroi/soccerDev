@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { DateRange } from 'react-date-range';
-import moment from 'moment'
+import CONFIG_APP from '../config';
 
 class DateRangePickerWrapper extends Component {
 
@@ -10,7 +10,8 @@ class DateRangePickerWrapper extends Component {
             selectionRange :{
                 startDate: props.startDate,
                 endDate: props.endDate ,
-                key: 'selection'
+                key: 'selection',
+                color:CONFIG_APP.defaultColor
             }
         }
     }
