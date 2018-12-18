@@ -12,7 +12,7 @@ class PhotoService {
     }
 
     static getPhoto=(photoId)=>{
-        return axios.get(apiUrlBase+ photoId)
+        return axios.get(apiUrl+ '/'+ photoId)
     }
     static savePhoto = photo => {
           return axios.post(apiUrl, photo)

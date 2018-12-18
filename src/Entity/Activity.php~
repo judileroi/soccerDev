@@ -78,17 +78,22 @@ class Activity
     private $longitude;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $date;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $startDate;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string"))
+     */
+    private $time;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $endDate;
 
@@ -500,5 +505,48 @@ class Activity
     public function getCategory()
     {
         return $this->category;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add photo.
+     *
+     * @param \App\Entity\Photo $photo
+     *
+     * @return Activity
+     */
+    public function addPhoto(\App\Entity\Photo $photo)
+    {
+        $this->photos[] = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Remove photo.
+     *
+     * @param \App\Entity\Photo $photo
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePhoto(\App\Entity\Photo $photo)
+    {
+        return $this->photos->removeElement($photo);
+    }
+
+    /**
+     * Get photos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPhotos()
+    {
+        return $this->photos;
     }
 }

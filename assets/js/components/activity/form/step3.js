@@ -1,5 +1,5 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
+import { TextField } from 'react-md';
 
 const FormActivityStep3 = (props) => {
     const { classes, handleChange , activity} = props
@@ -8,35 +8,30 @@ const FormActivityStep3 = (props) => {
             <div className="col-md-12">
                 <TextField
                     required
-                    onChange={handleChange}
+                            onChange={(v,e)=>{handleChange(e)}}
+
                     id="people"
                     label="Nombre de personnes"
                     type="number"
                     className={classes.textField}
-                    margin="normal"
-                    variant="outlined"
                     defaultValue={activity.people}
                 />
                 <TextField
                     required
-                    onChange={handleChange}
+                     onChange={(v,e)=>{handleChange(e)}}
                     id="ageMin"
                     label="Age minimum"
                     type="number"
                     className={classes.textField}
-                    margin="normal"
-                    variant="outlined"
                     defaultValue={activity.ageMin}
                 />
                 <TextField
                     required
-                    onChange={handleChange}
+                    onChange={(v,e)=>{handleChange(e)}}
                     id="ageMax"
                     label="Age maximum"
                     type="number"
                     className={classes.textField}
-                    margin="normal"
-                    variant="outlined"
                     defaultValue={activity.ageMax}
                 />
                 </div>

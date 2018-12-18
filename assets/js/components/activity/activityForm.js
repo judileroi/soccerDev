@@ -9,13 +9,16 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography'
+import { connect } from 'react-redux';
 
-import moment from 'moment'
 import FormStep from './formStep';
-import ActivityService from '../../services/activities';
 import PhotoService from '../../services/photo';
+import ActivityService from '../../services/activities';
 
+import { toastBox } from '../../toast';
+import { messageEvent } from '../../actions/message';
 import timestamp from '../../lib/timetampNow'
+import { push } from 'connected-react-router';
 
 const styles = theme => ({
   root: {
@@ -51,8 +54,9 @@ class ActivityForm extends Component {
         people: 0,
         ageMin: 10,
         ageMax: 100,
-        startDate: new Date(),
-        endDate: new Date(),
+
+        date:null,
+        time:null,
         category: 0
       },
       photos:[],
@@ -72,7 +76,7 @@ class ActivityForm extends Component {
         break;
 
       case 1:
-        if (activity.startDate && activity.endDate)
+        if (activity.date && activity.time)
           return false
         break;
 
@@ -178,16 +182,37 @@ class ActivityForm extends Component {
 
     }
   }
-  /** Upload State For Date */
-  handleSetStateForDate = (range) => {
-    var activity = this.state.activity
-    
-    this.setState({
-      activity: Object.assign({}, activity, { startDate: range.selection.startDate, endDate: range.selection.endDate }),
-      disabled: this.nextValidate()
 
-    })
-  }
+
+    /** Upload State For Date */
+    handleSetStateForDates = (date) => {
+      var activity = this.state.activity
+      
+      this.setState({
+        activity: Object.assign({}, activity, { date: date}),  
+      },()=>{
+        this.setState({
+          disabled: this.nextValidate()
+        })
+      })
+    }
+
+      /** Upload State For Date */
+      handleSetStateForTimes = (time) => {
+        
+        var activity = this.state.activity
+        this.setState({
+
+          activity: Object.assign({}, activity, { time: time}),
+    
+        },()=>{
+          this.setState({
+            disabled: this.nextValidate()
+          })
+
+        })
+      }
+
   /** Upload State Dropzone  */
   handleSetDropZoneState = (dz) => {
     this.setState({
@@ -238,33 +263,38 @@ class ActivityForm extends Component {
         console.log('Error');
       })
   }
+
   handleSend = () => {
     var { activity, photos } = this.state
 
     activity = Object.assign({}, activity, { category: '/api/categories/' + activity.category })
-    console.log(activity);
-
-    activity = Object.assign({}, activity, { startDate: activity.startDate })
-     activity = Object.assign({}, activity, { endDate: activity.endDate })
     activity = Object.assign({}, activity, { people: parseInt(activity.people) })
-    
+    activity = Object.assign({}, activity, { ageMax: parseInt(activity.ageMax) })
+    activity = Object.assign({}, activity, { ageMin: parseInt(activity.ageMin) })
+    activity = Object.assign({}, activity, { time: activity.time.getHours()+':'+activity.time.getMinutes() })
     var photos_all = photos
-    
+
     /** Save  */
     ActivityService.saveActivity(activity).then(res => {
+
       photos_all.map(p => {
         var photoSave = {
           dataURL: p.dataURL,
           created: timestamp.toString(),
           activity: res.data.id,
           category:null
-        }
-        console.log(photoSave);
-        
+        }        
         this.uploadPhoto(photoSave)
       })
+
+
+      this.props.navigateTo('/admin/list-activity')
+      
+      this.props.messageEvent(toastBox.activity.label,toastBox.activity.create,'success',0)
+      
     }).catch(err => {
       console.log(err);
+      this.props.messageEvent(toastBox.activity.label,toastBox.activity.error,'error',0)
 
     })
 
@@ -297,8 +327,10 @@ class ActivityForm extends Component {
                           index={index}
                           activity={activity}
                           handleSetState={this.handleSetState}
-                          handleSetStateForDate={this.handleSetStateForDate}
+                          handleSetStateForDates={this.handleSetStateForDates}
                           handleSetDropZoneState={this.handleSetDropZoneState}
+                          handleSetStateForTimes={this.handleSetStateForTimes}
+
                           dropzone={dropzone}
                         />
                         <div >
@@ -350,4 +382,16 @@ ActivityForm.propTypes = {
   classes: PropTypes.object,
 };
 
-export default withStyles(styles)(ActivityForm);
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    messageEvent: (entity,message,type,stop) => {
+          dispatch(messageEvent(entity,message,type,stop))
+      },
+    navigateTo: (location) => {
+        dispatch(push(location))
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(withStyles(styles)(ActivityForm))

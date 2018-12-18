@@ -1,16 +1,23 @@
 import React from 'react';
-import DateRangePickerWrapper from '../../../plugins/datePickerRange';
+import TimePickerComponent from '../../shared/timePicker';
+import DatePickerComponent from '../../shared/datePicker';
 
 const FormActivityStep1 = (props) => {
-    const {activity, changeDate} = props
+    const {activity, changeDate,changeTime} = props
     return (
-
-                <DateRangePickerWrapper 
-                startDate = {activity.startDate}
-                endDate = {activity.endDate}
-                changeDate ={changeDate}
+            <div>
+                <DatePickerComponent 
+                changeDate={(date,dateObjet)=>{changeDate(dateObjet)}} 
+                value={activity.date}
+                
                 />
+                <TimePickerComponent
+                 onChange={(time,timeObject)=>{changeTime(timeObject)}} 
+                 value={activity.time}
+                 />
+        </div>
     );
 }
 
-export default FormActivityStep1;
+
+export default FormActivityStep1

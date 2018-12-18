@@ -1,7 +1,9 @@
 import React from 'react';
-import { push } from "react-router-redux";
+import { push } from 'connected-react-router'
 import { connect } from "react-redux";
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'
+
 
 const NavigationUser = (props) => {
 
@@ -12,6 +14,7 @@ const NavigationUser = (props) => {
 
                 <div className="user-name"><span><img src="images/dashboard-avatar.jpg" alt="" /></span>Tom Perrin</div>
                 <ul>
+                    
                     <li><a href="dashboard.html"><i className="sl sl-icon-settings"></i> Dashboard</a></li>
                     <li><a href="dashboard-my-profile.html"><i className="sl sl-icon-user"></i> Profil</a></li>
                     <li><a href="dashboard-my-profile.html"><i className="sl sl-icon-user"></i> Historique</a></li>
@@ -19,7 +22,7 @@ const NavigationUser = (props) => {
                     <li><a href="dashboard-my-profile.html"><i className="sl sl-icon-user"></i> Messages</a></li>
                     <li><a onClick={props.navigateTo.bind(this, '/admin/category')}><i className="sl sl-icon-user"></i> Categories</a></li>
                     <li><a onClick={props.navigateTo.bind(this, '/admin/date')}><i className="sl sl-icon-user"></i> Date</a></li>
-                    <li><a href="dashboard-my-profile.html"><i className="sl sl-icon-user"></i> Activités</a></li>
+                    <li><a onClick={props.navigateTo.bind(this, '/admin/list-activity')}><i className="sl sl-icon-user"></i> Activités</a></li>
                     <li><a href="dashboard-my-profile.html"><i className="sl sl-icon-user"></i> Page</a></li>
                     <li><a href="index.html"><i className="sl sl-icon-power"></i> Logout</a></li>
                 </ul>
@@ -31,6 +34,8 @@ const NavigationUser = (props) => {
 NavigationUser.propTypes = {
     userActive: PropTypes.bool
 }
+
+
 
 const mapStateToProps = (state, ownProps) => {
     return {
@@ -47,4 +52,5 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavigationUser)
+
 

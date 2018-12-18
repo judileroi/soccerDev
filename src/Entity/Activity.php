@@ -78,7 +78,7 @@ class Activity
     private $longitude;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $date;
 
@@ -88,12 +88,12 @@ class Activity
     private $startDate;
 
     /**
-     * @ORM\Column(type="string", nullable=true))
+     * @ORM\Column(type="string"))
      */
     private $time;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $endDate;
 
@@ -548,5 +548,29 @@ class Activity
     public function getPhotos()
     {
         return $this->photos;
+    }
+
+    /**
+     * Set time.
+     *
+     * @param string $time
+     *
+     * @return Activity
+     */
+    public function setTime($time)
+    {
+        $this->time = $time;
+
+        return $this;
+    }
+
+    /**
+     * Get time.
+     *
+     * @return string
+     */
+    public function getTime()
+    {
+        return $this->time;
     }
 }

@@ -23,14 +23,17 @@ html {
 }
 .hidden { color: #eaeaea }
 
+.fullWidth{
+    width: 100%
+}
 /** Begin Steper **/
 
-.MuiTypography-body1-75{
+/* .MuiTypography-body1-75{
 font-size: inherit !important;
-}
-.MuiStepper-root-5{
+} */
+/* .MuiStepper-root-5{
     padding: inherit !important
-}
+} */
 
 
 .MuiStepIcon-root-52.MuiStepIcon-active-54{

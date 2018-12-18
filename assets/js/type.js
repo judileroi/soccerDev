@@ -1,3 +1,4 @@
+import { messageBoxReducer } from "./reducers/messageBox";
 
 
 const  TYPE = {
@@ -6,6 +7,7 @@ const  TYPE = {
         fetch_success:' Category Fetch Success ',
         active:' Category Active '
     },
+
     photo : {
         fetch:' Photo Fetch ',
         fetch_success:' Photo Fetch Success ',
@@ -16,6 +18,10 @@ const  TYPE = {
     default:{
         begin_loading:'Loading a resource',
         stop_loading: 'Stop Loading a resource',
+        
+    },
+    message:{
+        event: 'Entry Event Message',
         
     }
 }

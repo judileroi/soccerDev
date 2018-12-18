@@ -54,8 +54,15 @@ class FormStep extends React.Component {
         this.props.handleSetState(event)
     };
 
-    changeDate = (range) => {
-        this.props.handleSetStateForDate(range)
+
+    changeDate = (date) => {
+        
+        this.props.handleSetStateForDates(date)
+
+    }
+
+    changeTime = (time) => {
+        this.props.handleSetStateForTimes(time)
 
     }
     handleSetDropZoneState = dz => {
@@ -78,6 +85,7 @@ class FormStep extends React.Component {
                 return <FormActivityStep1
                     activity={activity}
                     changeDate={this.changeDate}
+                    changeTime={this.changeTime}
                 />
             case 2:
                 return <FormActivityStep1Bis

@@ -102,20 +102,20 @@ input[type="email"],
 input[type="number"],
 textarea,
 select {
-	height: 51px;
-	line-height: 51px;
-	padding: 0 20px;
-	outline: none;
+	 /* height: 31px; */
+	/*line-height: 51px; */
+	/* padding: 0 20px; */
+	/* outline: none; */
 	font-size: 15px;
 	color: #808080;
-	margin: 0 0 16px 0;
-	max-width: 100%;
-	width: 100%;
-	box-sizing: border-box; 
-	 display: block;
+	/* margin: 0 0 16px 0; */
+	/* max-width: 100%; */
+	width: 100% !important;
+	/* box-sizing: border-box;  */
+	 /* display: block; */
 	/* background-color: #fff;
 	border: 1px solid #dbdbdb; */
-	box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.06);
+	/* box-shadow: 0 1px 3px 0px rgba(0, 0, 0, 0.06); */
 	font-weight: 500;
 	opacity: 1;
 	border-radius: 3px;
